@@ -1,18 +1,20 @@
+import { Route, Routes, Link } from 'react-router-dom';
+
 function Navbar() {
   return (
     <nav className="nav">
       <div className="mb-2 sm:mb-0">
-        <a href="/home" className="nav-item nav-item-active font-semibold">
+        <Link to="/" className="nav-item nav-item-active font-semibold">
           Home
-        </a>
+        </Link>
       </div>
       <div>
-        <a href="/counter" className="nav-item">
+        <Link to="/counter" className="nav-item">
           Counter
-        </a>
-        <a href="/hangman" className="nav-item">
+        </Link>
+        <Link to="/hangman" className="nav-item">
           Hangman
-        </a>
+        </Link>
       </div>
     </nav>
   );
