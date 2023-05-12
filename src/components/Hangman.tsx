@@ -93,21 +93,14 @@ function Hangman() {
 
   return (
     <div className="grid justify-items-center text-3xl lg:text-5xl pt-3">
-      <div className='className="max-w-md lg:max-w-3xl'>
+      <div className="sm:max-w-sm md:max-w-md lg:max-w-3xl">
         <div>
           {playing === false && (
-            <div className="flex flex-row gap-4 px-2">
-              <input
-                className="border rounded basis-3/4"
-                id="secret"
-                type="text"
-                placeholder="Secret"
-                value={secret}
-                onChange={(e) => setSecret(e.target.value)}
-              />
+            <div className="grid grid-flow-row gap-4 px-2">
+              <div className="inputDiv">{secret}</div>
               <button
                 type="button"
-                className="btn bg-green-600 text-white basis-1/4 mr-6"
+                className="btn bg-green-600 text-white"
                 onClick={onSetSecretClick}
               >
                 GO
@@ -115,37 +108,23 @@ function Hangman() {
             </div>
           )}
           {playing === true && (
-            <div className="flex gap-4 px-2">
-              <div className="flex-auto">{guess}</div>
-              <div>{attemptLeft}</div>
+            <div className="grid grid-flow-row gap-4 px-2">
+              <div className="inputDiv">{guess}</div>
               <button
                 type="button"
-                className="btn bg-red-50 mr-6"
+                className="btn bg-red-600 text-white"
                 onClick={onRestartClick}
               >
-                <svg
-                  className="h-12 w-12 text-red-600"
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  strokeWidth="2"
-                  stroke="currentColor"
-                  fill="none"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  {' '}
-                  <path stroke="none" d="M0 0h24v24H0z" />{' '}
-                  <path d="M20 11a8.1 8.1 0 0 0 -15.5 -2m-.5 -5v5h5" />{' '}
-                  <path d="M4 13a8.1 8.1 0 0 0 15.5 2m.5 5v-5h-5" />
-                </svg>
+                Restart
               </button>
             </div>
           )}
         </div>
         {/* <div>Attempts left: {attemptLeft}</div> */}
         <div className="pt-2">
-          <ul>{getLetters}</ul>
+          <ul className="grid grid-cols-4 lg:grid-cols-6 gap-2">
+            {getLetters}
+          </ul>
         </div>
         {win && (
           <div className="my-10 py-5 rounded-lg text-white text-center bg-green-600">
@@ -171,6 +150,7 @@ function Hangman() {
             </button>
           </div>
         )}
+        <div className="text-gray-300 m-4">{attemptLeft}</div>
         {false && (
           <>
             <div>playing: {playing}</div>

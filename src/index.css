@@ -8,7 +8,7 @@
 }
 
 .nav {
-    @apply flex flex-col text-center sm:flex-row sm:text-left sm:justify-between py-4 px-6 shadow sm:items-baseline w-full;
+    @apply flex flex-col text-center sm:flex-row sm:text-left sm:justify-between py-3 px-6 shadow sm:items-baseline w-full;
 }
 
 .nav-item {
@@ -21,4 +21,9 @@
 
 .href {
    @apply text-blue-600 hover:text-blue-800 visited:text-purple-600
+}
+
+.inputDiv {
+    margin: 10px;
+    min-height: 55px;
 }
