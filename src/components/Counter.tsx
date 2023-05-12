@@ -1,17 +1,11 @@
 import React from 'react';
-import './App.css';
 
-function App() {
-  // eslint-disable-next-line no-console
-  console.log(`Running in '${import.meta.env.MODE}' mode`);
+function Counter() {
   const [count, setCount] = React.useState(0);
   return (
-    <>
-      <h1 className="text-5xl font-bold py-5 text-center bg-green-500">
-        Vite + React + Tailwind
-      </h1>
-      <h1 className="text-7xl py-10 text-center my-auto">Count: {count}</h1>
-      <div className="text-center">
+    <div className="py-10">
+      <h1 className="text-7xl text-center my-auto py-10">Count: {count}</h1>
+      <div className="text-center py-10">
         <button
           type="button"
           className="btn bg-red-500 mx-2 text-white"
@@ -34,8 +28,8 @@ function App() {
           +
         </button>
       </div>
-    </>
+    </div>
   );
 }
 
-export default App;
+export default Counter;
