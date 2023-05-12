@@ -19,6 +19,9 @@ function App() {
           -
         </button>
       </div>
+      <div>
+        <p className='fixed bottom-0'>[{import.meta.env.MODE}]</p>
+      </div>
     </>
   )
 }
