@@ -13,11 +13,14 @@ function App() {
         Count: {count}
       </h1>
       <div className='text-center'>
-        <button className='btn bg-green-500 mx-2 text-white' onClick={() => setCount((count) => count + 1)}>
-          +
-        </button>
         <button className='btn bg-red-500 mx-2 text-white' onClick={() => setCount((count) => count - 1)}>
           -
+        </button>
+        <button className='btn bg-blue-500 mx-2 text-white' onClick={() => setCount(0)}>
+          0
+        </button>
+        <button className='btn bg-green-500 mx-2 text-white' onClick={() => setCount((count) => count + 1)}>
+          +
         </button>
       </div>
     </>
