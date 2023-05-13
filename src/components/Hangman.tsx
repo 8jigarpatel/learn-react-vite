@@ -5,14 +5,10 @@ function Hangman() {
   const [guess, setGuess] = React.useState('');
   const [secret, setSecret] = React.useState('');
   const [playing, setPlaying] = React.useState(false);
-
-  // win and game over
+  const [attemptLeft, setAttemptsLeft] = React.useState(0);
   const [win, setWin] = React.useState(false);
   const [over, setOver] = React.useState(false);
-
-  // attempts
-  const defaultAttemptsCount = 7;
-  const [attemptLeft, setAttemptsLeft] = React.useState(defaultAttemptsCount);
+  const [tried, setTried] = React.useState('');
 
   useEffect(() => {
     // win
@@ -21,12 +17,12 @@ function Hangman() {
     }
     // game over
     else if (
-      attemptLeft === 0 &&
+      attemptLeft === 0 && playing &&
       secret.toLowerCase() !== guess.toLowerCase()
     ) {
       setOver(true);
     }
-  }, [attemptLeft]);
+  }, [attemptLeft, guess]);
 
   useEffect(() => {
     setGuess(secret.replace(/./g, '-'));
@@ -34,14 +30,19 @@ function Hangman() {
 
   const onInputClick = (l: string) => {
     if (playing) {
-      let temp = guess;
-      for (let i = 0; i < secret.length; i++) {
-        if (secret[i] === l) {
-          temp = temp.slice(0, i) + secret[i] + temp.slice(i + 1);
+      setTried(tried + l);
+      if (secret.includes(l)) {
+        let temp = guess;
+        for (let i = 0; i < temp.length; i++) {
+          if (secret[i] === l) {
+            temp = temp.slice(0, i) + secret[i] + temp.slice(i + 1);
+          }
         }
+        setGuess(temp);
       }
-      setGuess(temp);
-      setAttemptsLeft(attemptLeft - 1);
+      else {
+        setAttemptsLeft(attemptLeft - 1);
+      }
     } else {
       setSecret(secret + l);
     }
@@ -50,14 +51,20 @@ function Hangman() {
   const onRestartClick = () => {
     setGuess('');
     setSecret('');
+    setTried('');
     setPlaying(false);
     setWin(false);
     setOver(false);
-    setAttemptsLeft(defaultAttemptsCount);
+    setAttemptsLeft(0);
   };
 
   const onSetSecretClick = () => {
+    setAttemptsLeft(secret.length);
     setPlaying(true);
+  };
+
+  const isInputDisabled = (input: string): boolean => {
+    return tried.includes(input);
   };
 
   const getLetters = [
@@ -93,7 +100,8 @@ function Hangman() {
         key={l}
         type="button"
         tabIndex={-1}
-        className="btn font-mono m-2 bg-blue-100 hover:bg-blue-300"
+        className="btn font-mono m-2 bg-blue-100 hover:bg-blue-300 disabled:bg-blue-800"
+        disabled={isInputDisabled(l)}
         onClick={() => onInputClick(l)}
       >
         {l}
