@@ -26,12 +26,22 @@ function Hangman() {
     ) {
       setOver(true);
     }
-  }, [attemptLeft, guess, secret]);
+  }, [attemptLeft]);
+
+  useEffect(() => {
+    setGuess(secret.replace(/./g, '-'));
+  }, [secret]);
 
   const onInputClick = (l: string) => {
     if (playing) {
+      let temp = guess;
+      for (let i = 0; i < secret.length; i++) {
+        if (secret[i] === l) {
+          temp = temp.slice(0, i) + secret[i] + temp.slice(i + 1);
+        }
+      }
+      setGuess(temp);
       setAttemptsLeft(attemptLeft - 1);
-      setGuess(guess + l);
     } else {
       setSecret(secret + l);
     }
@@ -127,26 +137,26 @@ function Hangman() {
           </ul>
         </div>
         {win && (
-          <div className="my-10 py-5 rounded-lg text-white text-center bg-green-600">
+          <div className="my-5 py-2 rounded-lg text-white text-center bg-green-600">
             You Won!
             <button
               type="button"
               className="btn underline"
               onClick={onRestartClick}
             >
-              Play Again
+              Restart
             </button>
           </div>
         )}
         {over && (
-          <div className="my-10 py-5 rounded-lg text-white text-center bg-red-600">
+          <div className="my-5 py-2 rounded-lg text-white text-center bg-red-600">
             You Lost!
             <button
               type="button"
               className="btn underline"
               onClick={onRestartClick}
             >
-              Play Again
+              Restart
             </button>
           </div>
         )}

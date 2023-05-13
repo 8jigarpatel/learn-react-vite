@@ -24,6 +24,7 @@
 }
 
 .inputDiv {
+    @apply text-center font-mono tracking-widest;
     margin: 10px;
     min-height: 55px;
 }
