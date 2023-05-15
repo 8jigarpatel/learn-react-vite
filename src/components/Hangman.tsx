@@ -97,8 +97,8 @@ function Hangman() {
         key={l}
         type="button"
         tabIndex={-1}
-        className="btn font-mono m-2 bg-blue-100 hover:bg-blue-300 disabled:bg-blue-800"
-        disabled={tried.includes(l)}
+        className="btn font-mono m-2 bg-blue-100 hover:bg-blue-300 disabled:bg-gray-400"
+        disabled={tried.includes(l) || win || over}
         onClick={() => onInputClick(l)}
       >
         {l}
@@ -146,8 +146,10 @@ function Hangman() {
           </div>
         )}
         {over && (
-          <div className="my-5 py-2 rounded-lg text-white text-center bg-red-600">
-            You Lost!
+          <div className="grid grid-flow-row gap-4 px-2">
+            <div className="my-5 py-2 rounded-lg text-white text-center bg-red-600">
+              You Lost!
+            </div>
           </div>
         )}
         <div className="text-gray-300 m-4">{attemptLeft}</div>
