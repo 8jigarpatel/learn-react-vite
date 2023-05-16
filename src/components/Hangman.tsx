@@ -1,4 +1,5 @@
-import React, { useEffect } from 'react';
+import React, { useCallback, useEffect } from 'react';
+import { ArrowPathIcon, PlayIcon } from '@heroicons/react/24/solid';
 
 function Hangman() {
   // guess and secret
@@ -21,32 +22,38 @@ function Hangman() {
     } else if (attemptLeft === 0 && secret !== guess) {
       setOver(true);
     }
-  }, [attemptLeft, guess]);
+  }, [attemptLeft, guess, playing, secret]);
 
-  const updateGuess = (l: string) => {
-    let temp = guess;
-    for (let i = 0; i < temp.length; i += 1) {
-      if (secret[i] === l) {
-        temp = temp.slice(0, i) + secret[i] + temp.slice(i + 1);
-      }
-    }
-    setGuess(temp);
-  };
-
-  const onInputClick = (l: string) => {
-    if (playing) {
-      setTried(tried + l);
-      if (secret.includes(l)) {
-        updateGuess(l);
-      } else {
-        setAttemptsLeft(attemptLeft - 1);
-      }
-    } else {
-      setSecret((s) => {
-        return s + l;
+  const updateGuess = useCallback(
+    (l: string) => {
+      setGuess((prevGuess) => {
+        let temp = prevGuess;
+        for (let i = 0; i < temp.length; i += 1) {
+          if (secret[i] === l) {
+            temp = temp.slice(0, i) + secret[i] + temp.slice(i + 1);
+          }
+        }
+        return temp;
       });
-    }
-  };
+    },
+    [secret]
+  );
+
+  const onInputClick = useCallback(
+    (l: string) => {
+      if (playing) {
+        setTried((prevTried) => prevTried + l);
+        if (secret.includes(l)) {
+          updateGuess(l);
+        } else {
+          setAttemptsLeft((prevAttemptsLeft) => prevAttemptsLeft - 1);
+        }
+      } else {
+        setSecret((prevSecret) => prevSecret + l);
+      }
+    },
+    [playing, secret, updateGuess]
+  );
 
   const onRestartClick = () => {
     setPlaying(false);
@@ -98,7 +105,7 @@ function Hangman() {
         type="button"
         tabIndex={-1}
         className="btn font-mono m-2 bg-blue-100 hover:bg-blue-300 disabled:bg-gray-400"
-        disabled={tried.includes(l) || win || over}
+        disabled={tried.includes(l) || win}
         onClick={() => onInputClick(l)}
       >
         {l}
@@ -111,26 +118,26 @@ function Hangman() {
       <div className="sm:max-w-sm md:max-w-md lg:max-w-3xl">
         <div>
           {playing === false && (
-            <div className="grid grid-flow-row gap-4 px-2">
-              <div className="inputDiv">{secret}</div>
+            <div className="grid grid-cols-5 gap-4 px-2">
+              <div className="inputDiv col-span-4">{secret}</div>
               <button
                 type="button"
                 className="btn bg-green-600 text-white"
                 onClick={onSetSecretClick}
               >
-                GO
+                <PlayIcon className="text-white" />
               </button>
             </div>
           )}
           {playing === true && (
-            <div className="grid grid-flow-row gap-4 px-2">
-              <div className="inputDiv">{guess}</div>
+            <div className="grid grid-cols-5 gap-4 px-2">
+              <div className="inputDiv col-span-4">{guess}</div>
               <button
                 type="button"
                 className="btn bg-red-600 text-white"
                 onClick={onRestartClick}
               >
-                Restart
+                <ArrowPathIcon className="text-white" />
               </button>
             </div>
           )}
