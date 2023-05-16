@@ -114,30 +114,34 @@ function Hangman() {
   });
 
   return (
-    <div className="grid justify-items-center text-3xl lg:text-5xl pt-3">
+    <div className="grid justify-items-center text-3xl lg:text-6xl pt-3 lg:pt-12">
       <div className="sm:max-w-sm md:max-w-md lg:max-w-3xl">
         <div>
           {playing === false && (
-            <div className="grid grid-cols-5 gap-4 px-2">
-              <div className="inputDiv col-span-4">{secret}</div>
+            <div className="grid grid-cols-6 gap-4 px-2">
+              <div className="text-center font-mono tracking-widest col-span-5">
+                {secret}
+              </div>
               <button
                 type="button"
                 className="btn bg-green-600 text-white"
                 onClick={onSetSecretClick}
               >
-                <PlayIcon className="text-white" />
+                <PlayIcon className="py-2 text-white" />
               </button>
             </div>
           )}
           {playing === true && (
-            <div className="grid grid-cols-5 gap-4 px-2">
-              <div className="inputDiv col-span-4">{guess}</div>
+            <div className="grid grid-cols-6 gap-4 px-2">
+              <div className="text-center font-mono tracking-widest col-span-5">
+                {guess}
+              </div>
               <button
                 type="button"
                 className="btn bg-red-600 text-white"
                 onClick={onRestartClick}
               >
-                <ArrowPathIcon className="text-white" />
+                <ArrowPathIcon className="py-2 text-white" />
               </button>
             </div>
           )}
