@@ -1,5 +1,3 @@
-import { NavLink } from 'react-router-dom';
-
 function Home() {
   return (
     <div className="container max-w-4xl mx-auto">
